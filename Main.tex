@@ -27,6 +27,8 @@ brazil,				 % o último idioma é o principal do documento
 % --------------------
 % Pacotes fundamentais 
 % --------------------
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
 \usepackage{cmap}				% Mapear caracteres especiais no PDF
 \usepackage{mathptmx}
 \usepackage{pslatex}		    % {pslatex} Usa a fonte Times New Romam
@@ -64,10 +66,13 @@ brazil,				 % o último idioma é o principal do documento
 \usepackage{pdfpages}			% incluir arquivos pdf no texto
 \usepackage{multirow}
 \usepackage{tabularx}
+\usepackage{bigstrut}
+\usepackage[utf8]{inputenc}
+
 
 \usetikzlibrary{arrows,automata}
 
-%----------------
+%-\---------------
 
 
 % -------------------
@@ -145,14 +150,22 @@ brazil,				 % o último idioma é o principal do documento
 % Informações de dados para CAPA e FOLHA DE ROSTO
 % -----------------------------------------------
 \titulo{Desenvolvimento de um aplicativo para coleta de informações geográficas voluntárias sobre problemas urbanos}
-\autor{Liara Pereira Duarte, Álvaro Felipe Mendes Soares}
+\autor{Liara Pereira Duarte}
 \local{Almenara - MG}
-\data{Agosto - 2018}
+\data{Janeiro - 2019}
 \instituicao{Instituto Federal do Norte de Minas Gerais -- IFNMG \par Departamento do Trabalho \par Análise e Desenvolvimento de Sistemas} 
 \tipotrabalho{TCC (Graduação)}
-\orientador[Orientador:]{Prof. Alfredo Costa}
-\preambulo{Documento apresentado a banca examinadora designada pelo Colegiado do Curso Análise e Desenvolvimento de Sistemas -- ADS, como parte dos requisitos necessários à obtenção do grau de Tecnólogo em Análise e Desenvolvimento de Sistemas.}
+
+\preambulo{Documento apresentado a banca examinadora designada pelo Colegiado do Curso Análise e Desenvolvimento de Sistemas -- ADS, como parte dos requisitos necessários à obtenção do grau de Tecnólogo em Análise e Desenvolvimento de Sistemas.
+\newline
+\newline
+Orientador: Prof. Alfredo Costa
+} 
+
+
 % ---
+
+
 
 %-------------------
 % informações do PDF
@@ -266,10 +279,13 @@ listname={Lista de Algoritmos}%
 \makeindex
 % ---
 
+
 % -------------------
 % Início do documento
 % -------------------
 \begin{document}
+
+
 	% Retira espaço extra obsoleto entre as frases.
 	\frenchspacing 
 	
@@ -321,12 +337,48 @@ listname={Lista de Algoritmos}%
 \imprimirfolhaderosto
 \clearpage
 % ---
+% ----------------------------------------------------------------------- %
+
+% ---
+% Dedicatória
+% ---
+
+% ---
+
+
+
+
+% ---
+% Agradecimentos
+% ---
+\begin{agradecimentos}
+Em primeiro lugar a Deus, que sempre me deu forças para continuar mesmo quando pensei em desistir muitas vezes, em segundo lugar dedico os meus professores, que sempre estiveram dispostos a ajudar, nunca me esquecerei dos professores que tanto me ensinaram.
+
+\end{agradecimentos}
+
+% ---
+
+% ---
+% Epígrafe
+% ---
+\begin{epigrafe}
+	\vspace*{\fill}
+	\begin{flushright}
+		\textit{`` Whatever the device you use for getting your information out, \\ it should be the same information.``\\
+			Tim Berners-Lee}
+	\end{flushright}
+\end{epigrafe}
+% ---
 
 % ---------
 % Resumo
 % ---------
 \begin{resumo}	
-	A plataforma Cidadão do Vale é uma configuração do framework ClickOnMap implementada em 2017 no IFNMG-Almenara em parceria com a Prefeitura Municipal, que permite a informação em tempo real sobre a existência e localização de problemas relacionados à infraestrutura urbana por aplicação de técnicas de Informação Geográfica Voluntária (VGI). Será desenvolvido um aplicativo desta plataforma para smartphones com sistema operacional Android. Espera-se que os resultados desse projeto viabilizem a diminuição da necessidade de pesquisas de data fixa, onerosas ao poder público, por meio do fluxo contínuo de informações. Acredita-se que manutenção de um meio de comunicação público online será capaz de centralizar as informações sobre a infraestrutura urbana em ambiente digital e a visualização integrada território almenarense poderá auxiliar no processo de tomada de decisões e facilitar o diálogo entre a população e a gestão pública. Iniciativas como essa geram impactos positivos sobre o orçamento público e democratizam o acesso a informação sobre a gestão do espaço urbano.	
+	O presente estudo teve como objetivo elaborar um aplicativo da plataforma Cidadão do Vale, sendo esta uma configuração do framework ClickOnMap implementada em 2017 no IFNMG-Almenara em parceria com a Prefeitura Municipal. Trata-se de uma plataforma online que permite a informação em tempo real sobre a existência e localização de problemas relacionados à infraestrutura urbana. A pesquisa consistiu da elaboração da documentação e coleta de requisitos, seguido do desenvolvimento do aplicativo, que se baseou no método Cascata e os princípios da engenharia de software. Os resultados abrangeram apenas o aspecto inicial do sistema. Atualmente o aplicativo está em versão beta e já viabiliza contribuições por meio de smartphones. Uma vez finalizado, o aplicativo será disponibilizado para uso na Play Store (Google Play), para acesso amplo. Este trabalho poderá ser continuado em pesquisas futuras que visem o desenvolvimento de outros módulos para o aplicativo.
+	
+	Palavras-chave: Plataforma Cidadão do Vale; Aplicativos para smartphones; VGI;
+
+
 \end{resumo}
 % ---
 
@@ -334,10 +386,12 @@ listname={Lista de Algoritmos}%
 % Abstract
 % ----------
 \begin{resumo}[abstract]
-	The Cidadão do Vale platform is a configuration of the ClickOnMap framework implemented in 2017 at the IFNMG-Almenara in partnership with the City Hall, which allows real-time information on the existence and location of problems related to urban infrastructure through the application of Geographic Information Volunteer (VGI). An application of this platform will be developed for smartphones with Android operating system. It is hoped that the results of this project will make it possible to reduce the need for fixed-date research, which is costly to the public power, through the continuous flow of information. It is believed that the maintenance of an online public communication medium will be able to centralize the information on the urban infrastructure in a digital environment and the integrated visualization Almenarian territory can help in the decision making process and facilitate the dialogue between the population and the public management . Initiatives such as these generate positive impacts on the public budget and democratize access to information on urban space management.
+   This study aimed to develop an smartphone app of the Cidadão do Vale platform, which is a configuration of ClickOnMap framework implemented in 2017 at the IFNMG in partnership with Almenara's City Hall. It is an online platform that provides real-time information on the existence and location of problems related to urban infrastructure. The research consisted of software project documentation and requirements gathering, followed by the app development, which was based on the Cascade method and the principles of software engineering. The results covered only the initial aspect of the system. The application is currently in beta version and already allows contributions via smartphones. Once finalized, the app will be made available for use on the Play Store (Google Play) for broad access. This work may be continued in future research aimed at developing other modules for the app.
+   
+   Keywords: Cidadão do Vale platform; App for smartphones; VGI;
+
 \end{resumo}
 % ---
-
 
 % ---
 % inserir lista de ilustrações
@@ -345,6 +399,14 @@ listname={Lista de Algoritmos}%
 % ---
 \pdfbookmark[0]{\listfigurename}{lof}
 \listoffigures*
+\clearpage
+\cleardoublepage
+
+% ---% inserir lista de Tabelas
+% algumas imagens foram tiradas do link: http://tecnicoemineracao.com.br/o-que-e-mineracao/ <data: 16-08-2015 hora: 10:17>
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoftables*
 \clearpage
 \cleardoublepage
 % ---
