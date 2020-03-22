@@ -1,0 +1,410 @@
+%-----------------
+% verso e anverso:
+%-----------------
+%\documentclass[10pt,twoside,openany,a4paper,portuguese]{abntex2}	
+\documentclass[
+% -- opções da classe memoir --
+12pt,				 % tamanho da fonte
+openright,           % capítulos começam em pág ímpar (insere página vazia caso preciso)
+oneside,			 % impressão somente em um lado da folha. [ twoside | oneside]
+a4paper,			 % tamanho do papel. 
+sumario=tradicional, %% formato do sumário
+% -- opções da classe abntex2 --
+chapter=TITLE,		 % títulos de capítulos convertidos em letras maiúsculas
+%	section=TITLE,		 % títulos de seções convertidos em letras maiúsculas
+%	subsection=TITLE,	 % títulos de subseções convertidos em letras maiúsculas
+%	subsubsection=TITLE, % títulos de subsubseções convertidos em letras maiúsculas
+% -- opções do pacote babel --
+fleqn,				 % Alinha equações numeradas pela esquerda.
+english,
+spanish,
+brazil,				 % o último idioma é o principal do documento		
+]{abntex2}%{/TexStudio/Modelos/unimontes-ppgmsc-abntex2}
+% -------
+% PACOTES
+% -------
+
+% --------------------
+% Pacotes fundamentais 
+% --------------------
+\usepackage{cmap}				% Mapear caracteres especiais no PDF
+\usepackage{mathptmx}
+\usepackage{pslatex}		    % {pslatex} Usa a fonte Times New Romam
+\usepackage{geometry}
+\usepackage[utf8]{inputenc}		% Codificacao do documento (conversão automática dos acentos)
+\usepackage[T1]{fontenc}		% Selecao de codigos de fonte.
+\usepackage{tikz,fullpage}
+\usepackage{indentfirst}		% Indenta o primeiro parágrafo de cada seção.
+\usepackage{lscape}				% Mudar a orientação da página
+\usepackage{color}				% Controle das cores
+\usepackage[]{graphics}			% Inclusão de gráficos
+\usepackage{xcolor}
+\usepackage{listings}           % Inclusão de arquivos de código de programação
+\usepackage{showexpl}           % exibe codigos de figuras
+\usepackage{verbatim}           % incluir arquivos não processados pelo Latex
+\usepackage{colortbl}			% Permitir colorir células na tabela
+\usepackage{placeins}			%
+
+\usepackage{amsmath}			%
+\usepackage{amssymb}			%
+\usepackage{tabto}				%
+\usepackage{longtable}			% Permitir tabelas maiores que o comprimento da página, quebra automática
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{float, caption}		% Incluir novos rotulos a figura http://ctan.org/pkg/float
+\usepackage{tocbasic}			% Criar novas listas de Mapas, Photos e Figuras
+\usepackage{tocloft, xparse}	% Criar a lista de gráficos
+\usepackage{titlesec}
+%\usepackage{algorithm} %
+\usepackage{tocbibind}
+\usepackage[portuguese,ruled,lined,vlined]{algorithm2e} % Inclusão de algoritmos(pseudo código) em portugues
+\usepackage{etoolbox}			% http://ctan.org/pkg/etoolbox
+\usepackage{microtype} 			% para melhorias de justificação
+\usepackage{pgf}
+\usepackage{pdfpages}			% incluir arquivos pdf no texto
+\usepackage{multirow}
+\usepackage{tabularx}
+
+\usetikzlibrary{arrows,automata}
+
+%----------------
+
+
+% -------------------
+% Pacotes de citações
+% -------------------
+%\usepackage[brazilian,hyperpageref]{backref}	 % Paginas com as citações na bibl
+\usepackage[alf, abnt-etal-cite=1]{abntex2cite} %\usepackage[alf]{abntex2cite}	% Citações padrão ABNT
+
+%---------------------
+% Definindo o tamanho e aparência dos títulos do trabalho
+%---------------------
+\renewcommand{\tocheadstart}{\ABNTEXchapterfont}
+\renewcommand{\ABNTEXchapterfont}{\fontfamily{ptm}\fontseries{b}\selectfont}
+\renewcommand{\ABNTEXchapterfontsize}{\Large}
+
+%\titleformat{\Comando de Estructura}[Tipo]{Formato}{Etiqueta}{Separación}{Código anterior}[Código posterior]
+\titleformat{\chapter}[hang]{\normalfont\Large\bfseries}{\thechapter}{12pt}{\Large}
+
+\makeatletter
+% Formatação do capítulo \chapter para exibição na página onde foi definido
+\def\@makechapterhead#1{%
+	\begin{center}
+		\reset@font{\ABNTEXchapterfont\Large\noindent\textbf{\thechapter~\texorpdfstring{#1}{#1}}} \par%		
+	\end{center}
+	\vspace{18pt}
+}
+
+\makeatother
+
+%----------------------------------------
+% Definição de cores utilizadas no código
+%----------------------------------------
+\definecolor{dkgreen}{RGB}{0,0.6,0}
+\definecolor{gray}{RGB}{0.5,0.5,0.5}
+\definecolor{mauve}{RGB}{0.58,0,0.82}
+\definecolor{verde}{RGB}{0.25,0.5,0.35}
+\definecolor{verdecpp}{RGB}{0,0.5,0}
+\definecolor{verdejava}{RGB}{0.25,0.5,0.35}
+\definecolor{jpurple}{RGB}{0.5,0,0.35}
+\definecolor{mygreen}{RGB}{0,0.6,0}
+\definecolor{mygray}{RGB}{0.5,0.5,0.5}
+\definecolor{mymauve}{RGB}{0.58,0,0.82}
+\definecolor{blue}{RGB}{41,5,195}
+\definecolor{graytb}{RGB}{0.8,0.8,0.8}
+\definecolor{lightgray}{gray}{0.9}
+
+%-----------------------------
+% configuração de codigo fonte
+%-----------------------------
+\lstdefinestyle{Java}
+{
+	language={Java},
+	inputencoding=,
+	basicstyle=\ttfamily\small, 
+	keywordstyle=\color{jpurple}\bfseries,
+	stringstyle=\color{red},
+	commentstyle=\color{verdejava},
+	morecomment=[s][\color{blue}]{/*}{*/},
+	morecomment=[l][\color{blue}]{//},
+	extendedchars=true, 
+	showspaces=false, 
+	showstringspaces=false, 
+	extendedchars=true, 
+	numbers=left,
+	numberstyle=\tiny,
+	breaklines=true, 
+	backgroundcolor=\color{cyan!10}, 
+	breakautoindent=true, 
+	captionpos=b,
+	xleftmargin=0pt,
+	tabsize=4
+}
+
+% -----------------------------------------------
+% Informações de dados para CAPA e FOLHA DE ROSTO
+% -----------------------------------------------
+\titulo{Desenvolvimento de um aplicativo para coleta de informações geográficas voluntárias sobre problemas urbanos}
+\autor{Liara Pereira Duarte, Álvaro Felipe Mendes Soares}
+\local{Almenara - MG}
+\data{Agosto - 2018}
+\instituicao{Instituto Federal do Norte de Minas Gerais -- IFNMG \par Departamento do Trabalho \par Análise e Desenvolvimento de Sistemas} 
+\tipotrabalho{TCC (Graduação)}
+\orientador[Orientador:]{Prof. Alfredo Costa}
+\preambulo{Documento apresentado a banca examinadora designada pelo Colegiado do Curso Análise e Desenvolvimento de Sistemas -- ADS, como parte dos requisitos necessários à obtenção do grau de Tecnólogo em Análise e Desenvolvimento de Sistemas.}
+% ---
+
+%-------------------
+% informações do PDF
+%-------------------
+\makeatletter
+
+\hypersetup{
+	%pagebackref=true,
+	pdftitle={\@title}, 
+	pdfauthor={\@author},
+	pdfsubject={\imprimirpreambulo},
+	pdfcreator={nome do trabalho},
+	pdfkeywords={palavras chave}{multiobjetivo}{Pareto local search}, 
+	colorlinks=true,       		% false: boxed links; true: colored links
+	linkcolor=black,          	% color of internal links
+	citecolor=black,        	% color of links to bibliography
+	filecolor=black,      		% color of file links
+	urlcolor=black, 			% color of url links
+	bookmarksdepth=4
+}
+
+%---------------------------------
+
+
+%
+%% Define os comandos que montam a lista de símbolos
+\newcommand{\listadesimbolos}{\pretextualchapter{LISTA DE SÍMBOLOS}\@starttoc{lsb}}
+\setuptoc{lgf}{chapteratlist}
+\newcommand{\simbolo}[2]{{\addcontentsline{lsb}{simbolo}{\numberline{#1}{#2}}}#1}
+\newcommand{\l@simbolo}[2]{
+	\vspace{-0.75cm}\leftskip 0em 
+	\parindent 0em \@tempdima 5em
+	\advance\leftskip \@tempdima
+	\null\nobreak\hskip -\leftskip
+	{\normalfont #1}\hfil\nobreak\par}
+
+% Define o comando que monta a lista de siglas
+%\usepackage{nomencl}
+%\makenomenclature
+%\renewcommand{\nomname}{LISTA DE ABREVIATURAS E SIGLAS}
+%
+%\newcommand*{\sigla}[2]{#1\nomenclature{#1}{#2}}
+\newcommand{\listadesiglas}{\pretextualchapter{LISTA DE ABREVIATURAS E SIGLAS}\@starttoc{lsg}}
+\newcommand{\sigla}[2]{{\addcontentsline{lsg}{sigla}{\numberline{#1}{#2}}}#1}
+\newcommand{\l@sigla}[2]{
+	\vspace{-0.75cm}\leftskip 0em
+	\parindent 0em \@tempdima 5em
+	\advance\leftskip \@tempdima
+	\null\nobreak\hskip -\leftskip
+	{\normalfont #1}\hfil\nobreak\par}
+\makeatother
+% --- 
+
+%---------------------------------------
+% Criação do indice de gráficos
+%---------------------------------------
+
+\DeclareNewTOC[%
+type=grafico,%
+types=graficos,% used in the \listof.. command
+float,% define a floating environment
+floattype=4,% see below
+name=Gráfico,%
+listname={Lista de Gráficos}%
+]{lgf}
+
+%%% --- 
+
+\DeclareNewTOC[%
+type=quadro,%
+types=quadros,% used in the \listof.. command
+float,% define a floating environment
+floattype=4,% see below
+name=Quadro,%
+listname={Lista de Quadros}%
+]{loq}
+\setuptoc{loq}{chapteratlist}
+
+%%% --- 
+
+\DeclareNewTOC[%
+type=algoritmo,%
+types=algoritmos,% used in the \listof.. command
+float,% define a floating environment
+floattype=4,% see below
+name=Algoritmo,%
+listname={Lista de Algoritmos}%
+]{loa}
+\setuptoc{loa}{chapteratlist}
+
+%%% --- 
+
+
+%-----------------------------------------
+% Definindo o tamanho e alinhamento das colunas de uma tabela
+%-----------------------------------------
+\newcolumntype{L}[1]{>{\raggedright\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{C}[1]{>{\centering\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+\newcolumntype{R}[1]{>{\raggedleft\let\newline\\\arraybackslash\hspace{0pt}}m{#1}}
+
+% --- 
+% Espaçamentos entre linhas e parágrafos 
+% --- 
+\geometry{a4paper, left=3cm, right=2cm, bottom=2cm, top=3cm, headsep=1cm, footskip=2.2cm}
+\setlength{\parindent}{2cm} 		% O Recuo de 1ª linha do parágrafo
+\renewcommand{\baselinestretch}{1.5}	% espaçamento entre linhas 
+
+% ----------------
+% compila o indice
+% ----------------
+\makeindex
+% ---
+
+% -------------------
+% Início do documento
+% -------------------
+\begin{document}
+	% Retira espaço extra obsoleto entre as frases.
+	\frenchspacing 
+	
+	%-------------------------------------------------------
+	% Configurar a lista de gráficos
+	%-------------------------------------------------------
+	\newlistof{listofgraficos}{lgf}{\listofgraficosname}
+	\newcommand{\listofgraficosname}{Lista de gráficos}
+	\newlistentry{grafico}{lgf}{0}
+	\renewcommand{\cftgraficoname}{\graficoname\space}
+	\renewcommand*{\cftgraficoaftersnum}{\hfill\textendash\hfill}
+	%----- ----- ----- ----- ----- ------ ----- ----- ----- ----- ----- ------ --
+	
+	%-------------------------------------------------------
+	% Configurar a lista de quadros
+	%-------------------------------------------------------
+	\newlistof{listofquadros}{loq}{\listofquadrosname}
+	\newcommand{\listofquadrosname}{Lista de quadros}
+	\newlistentry{quadro}{loq}{0}
+	\renewcommand{\cftquadroname}{\quadroname\space}
+	\renewcommand*{\cftquadroaftersnum}{\hfill\textendash\hfill}
+	%----- ----- ----- ----- ----- ------ ----- ----- ----- ----- ----- ------ --
+	
+	%%-------------------------------------------------------
+	%% Configurar a lista de algoritmos
+	%%-------------------------------------------------------
+	\newlistof{listofalgoritmos}{loa}{\listofalgoritmosname}
+	\newcommand{\listofalgoritmosname}{Lista de Algoritmos}
+	\newlistentry{algorithm}{loa}{0}
+	\renewcommand{\cftalgorithmname}{\algorithmname\space}
+	\renewcommand*{\cftalgorithmaftersnum}{\hfill\textendash\hfill}
+	%----- ----- ----- ----- ----- ------ ----- ----- ----- ----- ----- ------ --
+
+% ----------------------------------------------------------
+% ELEMENTOS PRÉ-TEXTUAIS
+% ----------------------------------------------------------
+\pretextual
+
+% ----
+% Capa
+% ----
+\imprimircapa
+\clearpage
+% ---
+
+% --------------
+% Folha de rosto
+% --------------
+\imprimirfolhaderosto
+\clearpage
+% ---
+
+% ---------
+% Resumo
+% ---------
+\begin{resumo}	
+	A plataforma Cidadão do Vale é uma configuração do framework ClickOnMap implementada em 2017 no IFNMG-Almenara em parceria com a Prefeitura Municipal, que permite a informação em tempo real sobre a existência e localização de problemas relacionados à infraestrutura urbana por aplicação de técnicas de Informação Geográfica Voluntária (VGI). Será desenvolvido um aplicativo desta plataforma para smartphones com sistema operacional Android. Espera-se que os resultados desse projeto viabilizem a diminuição da necessidade de pesquisas de data fixa, onerosas ao poder público, por meio do fluxo contínuo de informações. Acredita-se que manutenção de um meio de comunicação público online será capaz de centralizar as informações sobre a infraestrutura urbana em ambiente digital e a visualização integrada território almenarense poderá auxiliar no processo de tomada de decisões e facilitar o diálogo entre a população e a gestão pública. Iniciativas como essa geram impactos positivos sobre o orçamento público e democratizam o acesso a informação sobre a gestão do espaço urbano.	
+\end{resumo}
+% ---
+
+% ----------
+% Abstract
+% ----------
+\begin{resumo}[abstract]
+	The Cidadão do Vale platform is a configuration of the ClickOnMap framework implemented in 2017 at the IFNMG-Almenara in partnership with the City Hall, which allows real-time information on the existence and location of problems related to urban infrastructure through the application of Geographic Information Volunteer (VGI). An application of this platform will be developed for smartphones with Android operating system. It is hoped that the results of this project will make it possible to reduce the need for fixed-date research, which is costly to the public power, through the continuous flow of information. It is believed that the maintenance of an online public communication medium will be able to centralize the information on the urban infrastructure in a digital environment and the integrated visualization Almenarian territory can help in the decision making process and facilitate the dialogue between the population and the public management . Initiatives such as these generate positive impacts on the public budget and democratize access to information on urban space management.
+\end{resumo}
+% ---
+
+
+% ---
+% inserir lista de ilustrações
+% algumas imagens foram tiradas do link: http://tecnicoemineracao.com.br/o-que-e-mineracao/ <data: 16-08-2015 hora: 10:17>
+% ---
+\pdfbookmark[0]{\listfigurename}{lof}
+\listoffigures*
+\clearpage
+\cleardoublepage
+% ---
+
+\begingroup
+\let\oldnumberline\numberline
+\renewcommand{\numberline}{Algoritmo~\oldnumberline}
+
+\endgroup
+\cleardoublepage
+
+% -----------------
+% inserir o sumario
+% -----------------
+\pdfbookmark[0]{\contentsname}{toc}
+\tableofcontents*
+%\clearpage
+\cleardoublepage
+% ---
+
+
+
+% ----------------------------------------------------------
+% ELEMENTOS TEXTUAIS
+% ----------------------------------------------------------
+% É possível usar \textual ou \mainmatter, que é a macro padrão do memoir.  
+\mainmatter
+\pagestyle{simple}  % remove as linhas no cabeçalho.
+
+%%
+% Introdução do Trabalho
+%%
+\include{Introducao/introducaotrabalho}  %OK
+%
+%%%
+%% Revisão Bibliográfica
+%%%
+\include{Fundamentacao/fundamentacaoteorica} %OK
+%
+%%%
+%% Metodologia da Pesquisa
+%%%
+\include{Metodologia/medodologiadapesquisa} %OK
+%
+%%%
+%% Cronograma das atividades de pesquisa
+%%%
+\include{Cronograma/cronogramadapesquisa} %OK
+%
+%%%
+%% Conclusão
+%%%
+\include{Conclusao/conclusaodapesquisa} %OK
+
+% ----------------------------------------------------------
+% Referências bibliográficas
+% ----------------------------------------------------------
+
+\renewcommand{\bibname}{REFER\^ENCIAS}
+
+\bibliography{Bibliografia/Referencias}
+
+\end{document}
